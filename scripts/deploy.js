@@ -1,20 +1,21 @@
-const { ethers } = require("hardhat")
+const { ethers } = require("hardhat");
 
-aysnc function main () {
+async function main () {
     const [deployer] = await ethers.getSigners();
 
     console.log("Deploying contracts with the account: ", deployer.address);
 
-    console.log("Account Balance:", (await deployer.getBalance().toString());
+    console.log("Account Balance:", (await deployer.getBalance().toString()));
     
     const Token = await ethers.getContractFactory("Token");
+    const token = await Token.deploy();
 
-    const token = Token.deplo();
+    console.log("Token address: ", token.address);
 }
 
 main()
-.then(()=> process.exit(0))
+.then(() => process.exit(0))
 .catch(e => {
     console.log(e);
-    console.log(1);
-})
+    process.exit(1);
+});
