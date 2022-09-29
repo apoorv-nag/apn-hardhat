@@ -7,7 +7,13 @@ contract Solidity8SafeMath {
         --x;
         // If we want to see underflow issue then we can wrap in unchecked
         // unchecked { x--; }
-        
+        return x;
+    }
+
+    function testUncheckedUnderflow() public pure returns (uint) {
+        uint x = 0;
+        unchecked { x--; }
+
         return x;
     }
 }
