@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 error TooLowCreditValue(string message);
 error UnauthorizedAccess();
-error TooLessBalance();
+error TooLessBalance(uint message);
 
 contract ApnaWallet {
     address payable owner;
@@ -29,7 +29,8 @@ contract ApnaWallet {
 
     function withdraw(uint amount) public {
         if (amount > address(this).balance) {
-            revert TooLessBalance();
+            revert("Balance Too Low");
+            // revert TooLessBalance({message: amount});
         }
         owner.transfer(amount);
     }
