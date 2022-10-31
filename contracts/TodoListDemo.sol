@@ -2,7 +2,9 @@
 // pragma solidity 0.8.9;
 pragma solidity 0.8.17;
 
-contract Ownable {
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+contract Ownable is ReentrancyGuard {
     // Variable that maintains 
     // owner address
     address private _owner;
@@ -38,11 +40,13 @@ contract Ownable {
         return msg.sender == _owner;
     }
 
-    function transferOwnerShip(address _newOwner) onlyOwner public {
+    function transferOwnerShip(address _newOwner) onlyOwner nonReentrant public {
         _owner = _newOwner;
     }
 }
-contract TodoList is Ownable {
+
+
+contract TodoList is ReentrancyGuard, Ownable {
 
     enum TodoStatuses{PENDING, COMPLETE}
     TodoStatuses constant defaultChoice = TodoStatuses.PENDING;
@@ -59,7 +63,7 @@ contract TodoList is Ownable {
 
     Todo[] public listOfTodos;
 
-    function createTask (string memory _task) onlyOwner external {
+    function createTask (string memory _task) onlyOwner nonReentrant external {
         Todo memory todo = Todo(_task, TodoStatuses.PENDING);
         listOfTodos.push(todo);
     }
@@ -76,14 +80,14 @@ contract TodoList is Ownable {
         return listOfTodos.length;
     }
 
-    function markComplete(uint _id) onlyOwner external  {
+    function markComplete(uint _id) onlyOwner nonReentrant external  {
         /**
         * Mark a task as complete
         */
         listOfTodos[_id].status = TodoStatuses.COMPLETE;
     }
 
-    function removeTask(uint index) onlyOwner public {
+    function removeTask(uint index) onlyOwner nonReentrant public {
         require(index <= listOfTodos.length, "Tasks are less");
         listOfTodos[index] = listOfTodos[listOfTodos.length - 1];
         listOfTodos.pop();
