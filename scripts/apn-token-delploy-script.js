@@ -3,15 +3,11 @@
 async function main() {
   const [deployer, deployer_2] = await ethers.getSigners();
 
-  const ERC20FixedSupplyContractFactory = await ethers.getContractFactory(
-    'APNToken'
-  );
-  const ERC20FixedSupplyContract = await ERC20FixedSupplyContractFactory.deploy(
-    10000
-  );
+  const APNTokenContract = await ethers.getContractFactory('APNToken');
+  const APNToken = await APNTokenContract.deploy(10000);
   console.log(await deployer.getBalance());
-  console.log(await ERC20FixedSupplyContract.balanceOf(deployer.address));
-  console.log(await ERC20FixedSupplyContract.balanceOf(deployer_2.address));
+  console.log(await APNToken.balanceOf(deployer.address));
+  console.log(await APNToken.balanceOf(deployer_2.address));
 }
 
 main().catch((e) => {
