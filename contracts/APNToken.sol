@@ -3,9 +3,13 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract ERC20FixedSupply is ERC20 {
+contract APNToken is ERC20 {
     constructor(uint256 initialSupply) ERC20("APN Token", "APN") {
         _mint(msg.sender, initialSupply);
+    }
+
+    function test() public pure returns (uint) {
+        return 0;
     }
 
     function _transfer(
@@ -14,9 +18,5 @@ contract ERC20FixedSupply is ERC20 {
         uint256 val
     ) internal override {
         super._transfer(from, to, val);
-    }
-
-    function test() public pure returns (uint) {
-        return 0;
     }
 }
